@@ -10,28 +10,27 @@ print("Descargando archivo ZIP...")
 with urllib.request.urlopen(zip_url) as response:
     zip_data = response.read()
 
-files_content = {}
+# Extract all files to output
+base_path = "/vercel/share/v0-project/extracted_content"
 
 with zipfile.ZipFile(io.BytesIO(zip_data), 'r') as zip_ref:
-    print("Archivos en el ZIP:")
+    # List all files first
+    print("Files in ZIP:")
     for name in zip_ref.namelist():
         print(f"  - {name}")
-    print("\n")
     
-    # Extract all text files
+    # Extract all files
+    zip_ref.extractall(base_path)
+    print(f"\nExtracted to: {base_path}")
+    
+    # Print contents of key text files for context
+    text_extensions = ('.tsx', '.ts', '.json', '.css', '.mjs', '.sql')
     for name in zip_ref.namelist():
-        if name.endswith('/'):
-            continue
-        # Skip binary files and node_modules
-        if 'node_modules' in name or name.endswith(('.png', '.ico', '.jpg', '.jpeg', '.gif', '.svg', '.woff', '.woff2', '.ttf', '.eot')):
-            continue
-        try:
-            content = zip_ref.read(name).decode('utf-8')
-            files_content[name] = content
-        except:
-            pass
-
-# Output as JSON for easy parsing
-print("===FILES_JSON_START===")
-print(json.dumps(files_content, indent=2))
-print("===FILES_JSON_END===")
+        if name.endswith(text_extensions) and 'node_modules' not in name:
+            try:
+                content = zip_ref.read(name).decode('utf-8')
+                full_path = os.path.join(base_path, name)
+                print(f"\n=== {name} ===")
+                print(f"Saved to: {full_path}")
+            except:
+                pass

@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 48 33% 99%;
+  --foreground: 0 0% 24%;
+
+  --card: 48 33% 99%;
+  --card-foreground: 0 0% 24%;
+
+  --popover: 48 33% 99%;
+  --popover-foreground: 0 0% 24%;
+
+  --primary: 73 10% 40%;
+  --primary-foreground: 48 33% 99%;
+
+  --secondary: 73 12% 60%;
+  --secondary-foreground: 0 0% 24%;
+
+  --muted: 48 20% 94%;
+  --muted-foreground: 0 0% 42%;
+
+  --accent: 33 50% 64%;
+  --accent-foreground: 0 0% 24%;
+
+  --destructive: 25 38% 44%;
+  --destructive-foreground: 48 33% 99%;
+
+  --border: 60 10% 82%;
+  --input: 60 10% 82%;
+  --ring: 73 10% 40%;
+
+  --radius: 0.5rem;
+
+  /* Colores contemplativos */
+  --contemplative: 220 15% 45%;
+  --contemplative-50: 220 15% 95%;
+  --contemplative-100: 220 15% 90%;
+  --contemplative-200: 220 15% 80%;
+  --contemplative-300: 220 15% 70%;
+  --contemplative-400: 220 15% 60%;
+  --contemplative-500: 220 15% 50%;
+  --contemplative-600: 220 15% 40%;
+  --contemplative-700: 220 15% 30%;
+  --contemplative-800: 220 15% 20%;
+  --contemplative-900: 220 15% 10%;
+
+  /* Colores reflexivos */
+  --reflective: 240 12% 55%;
+  --reflective-50: 240 12% 95%;
+  --reflective-100: 240 12% 90%;
+  --reflective-200: 240 12% 80%;
+  --reflective-300: 240 12% 70%;
+  --reflective-400: 240 12% 60%;
+  --reflective-500: 240 12% 50%;
+  --reflective-600: 240 12% 40%;
+  --reflective-700: 240 12% 30%;
+  --reflective-800: 240 12% 20%;
+  --reflective-900: 240 12% 10%;
+}
+
+body {
+  background: linear-gradient(135deg, #fefdf9 0%, #f8f7f3 100%);
+  color: #3e3e3e;
+  min-height: 100vh;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Animaciones muy sutiles */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.4s ease-out forwards;
+}
+
+/* Estilos para acordes */
+.chord {
+  @apply font-bold text-contemplative-600 inline-block min-w-[2rem] text-center;
+}
+
+/* Transiciones suaves */
+.transition-gentle {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-muted/30 rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-contemplative-300/50 rounded-full hover:bg-contemplative-400/50;
+}
+
+/* Estilos para el visor de canciones */
+.song-line {
+  @apply py-1 leading-relaxed;
+}
+
+.song-chord-line {
+  @apply text-contemplative-600 font-mono text-sm tracking-wider;
+}
+
+.song-lyric-line {
+  @apply text-foreground;
+}
