@@ -10,55 +10,26 @@ print("Descargando archivo ZIP...")
 with urllib.request.urlopen(zip_url) as response:
     zip_data = response.read()
 
-# Key files to extract content from
-key_files = [
-    'package.json',
-    'app/page.tsx',
-    'app/layout.tsx',
-    'app/globals.css',
-    'app/loading.tsx',
-    'app/not-found.tsx',
-    'app/error.tsx',
-    'app/manifest.ts',
-    'app/sitemap.ts',
-    'app/robots.ts',
-    'components/song-viewer.tsx',
-    'components/song-form.tsx',
-    'components/metronome.tsx',
-    'components/chord-recognition.tsx',
-    'components/music-theory.tsx',
-    'components/auth-dialog.tsx',
-    'components/auth-status.tsx',
-    'components/admin-login.tsx',
-    'components/theme-provider.tsx',
-    'lib/supabase.ts',
-    'lib/supabase-auth.ts',
-    'lib/auth.ts',
-    'lib/utils.ts',
-    'hooks/use-auth.ts',
-    'hooks/use-supabase-auth.ts',
-    'hooks/use-mobile.tsx',
-    'hooks/use-toast.ts',
-    'tailwind.config.ts',
-    'next.config.mjs',
-    'tsconfig.json',
-    'components.json',
-    'postcss.config.mjs',
-    'styles/globals.css',
-    '.gitignore',
-    '.eslintrc.json',
-]
-
 files_content = {}
 
 with zipfile.ZipFile(io.BytesIO(zip_data), 'r') as zip_ref:
+    print("Archivos en el ZIP:")
     for name in zip_ref.namelist():
-        if name in key_files:
-            try:
-                content = zip_ref.read(name).decode('utf-8')
-                files_content[name] = content
-            except:
-                pass
+        print(f"  - {name}")
+    print("\n")
+    
+    # Extract all text files
+    for name in zip_ref.namelist():
+        if name.endswith('/'):
+            continue
+        # Skip binary files and node_modules
+        if 'node_modules' in name or name.endswith(('.png', '.ico', '.jpg', '.jpeg', '.gif', '.svg', '.woff', '.woff2', '.ttf', '.eot')):
+            continue
+        try:
+            content = zip_ref.read(name).decode('utf-8')
+            files_content[name] = content
+        except:
+            pass
 
 # Output as JSON for easy parsing
 print("===FILES_JSON_START===")
